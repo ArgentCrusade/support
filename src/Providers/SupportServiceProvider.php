@@ -3,6 +3,7 @@
 namespace ArgentCrusade\Support\Providers;
 
 use ArgentCrusade\Support\Console\Commands\ArtisanServeCommand;
+use ArgentCrusade\Support\Console\Commands\ConfigureApp;
 use ArgentCrusade\Support\Console\Commands\SendDeploymentResultNotification;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,6 +16,7 @@ class SupportServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
+                ConfigureApp::class,
                 SendDeploymentResultNotification::class,
                 ArtisanServeCommand::class,
             ]);

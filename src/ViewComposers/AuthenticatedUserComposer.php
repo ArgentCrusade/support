@@ -2,7 +2,7 @@
 
 namespace ArgentCrusade\Support\ViewComposers;
 
-use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\View\View;
 
 class AuthenticatedUserComposer

@@ -22,7 +22,7 @@ class SupportServiceProvider extends ServiceProvider
 
         $this->publishes([
             realpath(__DIR__.'/../../config/support.php') => config_path('support.php'),
-            realpath(__DIR__.'./../../resources/lang') => resource_path('lang/vendor/support'),
+            realpath(__DIR__.'/../../resources/lang') => resource_path('lang/vendor/support'),
         ]);
 
         $this->mergeConfigFrom(realpath(__DIR__.'/../../config/support.php'), 'support');

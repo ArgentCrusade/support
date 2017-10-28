@@ -6,6 +6,7 @@ return [
     'edit' => 'Edit',
     'delete' => 'Delete',
     'submit' => 'Submit',
+    'cancel' => 'Cancel',
     'ago' => 'ago',
     'no_data' => 'No Data',
     'actions' => 'Actions',
@@ -14,4 +15,5 @@ return [
     ],
     'created_at' => 'Created at :date',
     'updated_at' => 'Created at :date',
+    'make_choice' => 'Choose',
 ];

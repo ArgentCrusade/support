@@ -30,7 +30,7 @@ abstract class DeploymentResultNotification extends Notification implements Shou
         return [
             'app' => config('app.name'),
             'env' => config('app.env'),
-            'hostname' => config('deployments.hostname'),
+            'hostname' => config('support.deployments.hostname'),
             'revision' => AppRevision::get(),
         ];
     }
@@ -54,6 +54,6 @@ abstract class DeploymentResultNotification extends Notification implements Shou
     {
         return TelegramMessage::create()
             ->content($this->content())
-            ->button('Open App', url('/'));
+            ->button(trans('support::deployments.notifications.button_label'), url('/'));
     }
 }

@@ -7,7 +7,7 @@ return [
         'time' => 'H:i',
         'time_s' => 'H:i:s',
         'datetime' => 'Y/m/d H:i',
-        'datetime_at' => 'Y/m/d at H:i',
+        'datetime_at' => 'Y/m/d \a\t H:i',
         'datetime_s' => 'Y/m/d H:i:s',
     ],
 

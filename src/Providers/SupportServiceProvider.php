@@ -3,8 +3,6 @@
 namespace ArgentCrusade\Support\Providers;
 
 use ArgentCrusade\Support\Console\Commands\ArtisanServeCommand;
-use ArgentCrusade\Support\Console\Commands\ConfigureApp;
-use ArgentCrusade\Support\Console\Commands\SendDeploymentResultNotification;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
@@ -15,15 +13,8 @@ class SupportServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                ConfigureApp::class,
-                SendDeploymentResultNotification::class,
-            ]);
-
-            if (!$this->isLumen()) {
-                $this->commands([ArtisanServeCommand::class]);
-            }
+        if ($this->app->runningInConsole() && !$this->isLumen()) {
+            $this->commands([ArtisanServeCommand::class]);
         }
 
         $this->publishes([

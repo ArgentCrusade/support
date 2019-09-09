@@ -2,51 +2,6 @@
 
 use Carbon\Carbon;
 
-if (!function_exists('admin_asset')) {
-    /**
-     * Get the admin asset URL.
-     *
-     * @param string $url
-     *
-     * @return string
-     */
-    function admin_asset(string $url)
-    {
-        return asset_url('backend', $url);
-    }
-}
-
-if (!function_exists('app_asset')) {
-    /**
-     * Get the app asset URL.
-     *
-     * @param string $url
-     *
-     * @return string
-     */
-    function app_asset(string $url)
-    {
-        return asset_url('frontend', $url);
-    }
-}
-
-if (!function_exists('asset_url')) {
-    /**
-     * Get the asset URL.
-     *
-     * @param string $type
-     * @param string $url
-     *
-     * @return string
-     */
-    function asset_url(string $type, string $url)
-    {
-        $host = trim(config('support.assets.'.$type.'_host', '/'));
-
-        return 'https://'.$host.'/'.ltrim($url, '/');
-    }
-}
-
 if (!function_exists('iif')) {
     /**
      * Returns second or third operand depending on $condition.

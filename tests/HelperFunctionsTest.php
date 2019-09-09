@@ -6,22 +6,6 @@ use Carbon\Carbon;
 
 class HelperFunctionsTest extends TestCase
 {
-    public function testAdminAssetFunction()
-    {
-        $this->app['config']->set('support.assets.backend_host', 'admin.localhost');
-
-        $expected = 'https://admin.localhost/css/vendor.css';
-        $this->assertSame($expected, admin_asset('/css/vendor.css'));
-    }
-
-    public function testAppAssetFunction()
-    {
-        $this->app['config']->set('support.assets.frontend_host', 'assets.app.localhost');
-        $expected = 'https://assets.app.localhost/css/vendor.css';
-
-        $this->assertSame($expected, app_asset('/css/vendor.css'));
-    }
-
     public function testIifFunction()
     {
         $this->assertSame('first', iif(true, 'first', 'second'));

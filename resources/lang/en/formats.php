@@ -19,5 +19,7 @@ return [
         'minutes' => ['minute', 'minutes', 'minutes'],
         'seconds' => ['second', 'seconds', 'seconds'],
         'just_now' => 'just now',
+        'past' => ':value ago',
+        'future' => 'In :value',
     ],
 ];

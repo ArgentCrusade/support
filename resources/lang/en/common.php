@@ -7,7 +7,6 @@ return [
     'delete' => 'Delete',
     'submit' => 'Submit',
     'cancel' => 'Cancel',
-    'ago' => 'ago',
     'no_data' => 'No Data',
     'actions' => 'Actions',
     'search' => [

@@ -35,14 +35,13 @@ class HelperFunctionsTest extends TestCase
     }
 
     /**
-     * @param Carbon $from
-     * @param Carbon $till
+     * @param Carbon $date
      * @param string $expected
      * @dataProvider carbonDiffDataProvider
      */
-    public function testCarbonDiffFunction(Carbon $from, Carbon $till, string $expected)
+    public function testCarbonDiffFunction(Carbon $date, string $expected)
     {
-        $this->assertSame($expected, carbon_diff($from, $till));
+        $this->assertSame($expected, carbon_diff($date));
     }
 
     /**
@@ -60,40 +59,62 @@ class HelperFunctionsTest extends TestCase
     public function carbonDiffDataProvider()
     {
         return [
+            // Past
             [
-                'from' => Carbon::now()->subSeconds(5),
-                'till' => Carbon::now(),
+                'date' => Carbon::now()->subSeconds(5),
                 'expected' => 'just now',
             ],
             [
-                'from' => Carbon::now()->subSeconds(50),
-                'till' => Carbon::now(),
+                'date' => Carbon::now()->subSeconds(50),
                 'expected' => '50 seconds ago',
             ],
             [
-                'from' => Carbon::now()->subMinutes(5),
-                'till' => Carbon::now(),
+                'date' => Carbon::now()->subMinutes(5),
                 'expected' => '5 minutes ago',
             ],
             [
-                'from' => Carbon::now()->subHour(),
-                'till' => Carbon::now(),
+                'date' => Carbon::now()->subHour(),
                 'expected' => '1 hour ago',
             ],
             [
-                'from' => Carbon::now()->subDays(3),
-                'till' => Carbon::now(),
+                'date' => Carbon::now()->subDays(3),
                 'expected' => '3 days ago',
             ],
             [
-                'from' => Carbon::now()->subMonth(),
-                'till' => Carbon::now(),
+                'date' => Carbon::now()->subMonth(),
                 'expected' => '1 month ago',
             ],
             [
-                'from' => Carbon::now()->subYears(15),
-                'till' => Carbon::now(),
+                'date' => Carbon::now()->subYears(15),
                 'expected' => '15 years ago',
+            ],
+
+            // Future
+            // For some reason Carbon's add* methods are missing
+            // one second, therefore extra ->addSecond() call.
+            [
+                'date' => Carbon::now()->addSeconds(50)->addSecond(),
+                'expected' => 'In 50 seconds',
+            ],
+            [
+                'date' => Carbon::now()->addMinutes(5)->addSecond(),
+                'expected' => 'In 5 minutes',
+            ],
+            [
+                'date' => Carbon::now()->addHour()->addSecond(),
+                'expected' => 'In 1 hour',
+            ],
+            [
+                'date' => Carbon::now()->addDays(3)->addSecond(),
+                'expected' => 'In 3 days',
+            ],
+            [
+                'date' => Carbon::now()->addMonth()->addSecond(),
+                'expected' => 'In 1 month',
+            ],
+            [
+                'date' => Carbon::now()->addYears(15)->addSecond(),
+                'expected' => 'In 15 years',
             ],
         ];
     }

@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 
 if (!function_exists('iif')) {
     /**
@@ -22,11 +23,11 @@ if (!function_exists('carbon_timezone')) {
     /**
      * Sets timezone of given Carbon instance to user's timezone.
      *
-     * @param Carbon $date
+     * @param \DateTimeInterface $date
      *
-     * @return Carbon
+     * @return \DateTimeInterface|CarbonInterface
      */
-    function carbon_timezone(Carbon $date)
+    function carbon_timezone(\DateTimeInterface $date)
     {
         if (!app()->bound('user.timezone')) {
             return $date;
@@ -40,12 +41,12 @@ if (!function_exists('carbon_format')) {
     /**
      * Formats given Carbon instance in a desired format.
      *
-     * @param Carbon $date
-     * @param string $formatType = 'default'
+     * @param \DateTimeInterface $date
+     * @param string             $formatType = 'default'
      *
      * @return string
      */
-    function carbon_format(Carbon $date, string $formatType = 'default')
+    function carbon_format(\DateTimeInterface $date, string $formatType = 'default')
     {
         return carbon_timezone($date)->format(
             trans('support::formats.dates.'.$formatType)
@@ -55,19 +56,17 @@ if (!function_exists('carbon_format')) {
 
 if (!function_exists('carbon_diff')) {
     /**
-     * Returns human-friendly localized time difference.
-     * If $till is null, Carbon::now() will be used.
+     * Returns human-friendly localized time difference according to the current time.
      *
-     * @param Carbon      $from
-     * @param Carbon|null $till
+     * @param \DateTimeInterface $date
      *
      * @return string
      */
-    function carbon_diff(Carbon $from, Carbon $till = null)
+    function carbon_diff(\DateTimeInterface $date)
     {
-        $till = $till ?? Carbon::now();
-        $diff = carbon_timezone($till)->diff(
-            carbon_timezone($from)
+        $now = Carbon::now();
+        $diff = carbon_timezone($now)->diff(
+            carbon_timezone($date)
         );
 
         $values = [
@@ -76,28 +75,28 @@ if (!function_exists('carbon_diff')) {
             'days' => intval($diff->format('%a')),
             'hours' => intval($diff->format('%h')),
             'minutes' => intval($diff->format('%i')),
-            'seconds' => intval($diff->format('%s')),
         ];
 
-        $ago = trans('support::common.ago');
+        $isFuture = carbon_timezone($now)->timestamp < carbon_timezone($date)->timestamp;
+        $format = 'support::formats.date_plurals.'.($isFuture ? 'future' : 'past');
 
-        if ($values['years'] > 0) {
-            return pluralize($values['years'], trans('support::formats.date_plurals.years')).' '.$ago;
-        } elseif ($values['months'] > 0) {
-            return pluralize($values['months'], trans('support::formats.date_plurals.months')).' '.$ago;
-        } elseif ($values['days'] > 0) {
-            return pluralize($values['days'], trans('support::formats.date_plurals.days')).' '.$ago;
-        } elseif ($values['hours'] > 0) {
-            return pluralize($values['hours'], trans('support::formats.date_plurals.hours')).' '.$ago;
-        } elseif ($values['minutes'] > 0) {
-            return pluralize($values['minutes'], trans('support::formats.date_plurals.minutes')).' '.$ago;
+        foreach ($values as $period => $value) {
+            if ($value > 0) {
+                return trans($format, [
+                    'value' => pluralize($value, trans('support::formats.date_plurals.'.$period))
+                ]);
+            }
         }
 
-        if ($values['seconds'] < 10) {
+        $seconds = intval($diff->format('%s'));
+
+        if ($seconds < 10) {
             return trans('support::formats.date_plurals.just_now');
         }
 
-        return pluralize($values['seconds'], trans('support::formats.date_plurals.seconds')).' '.$ago;
+        return trans($format, [
+            'value' => pluralize($seconds, trans('support::formats.date_plurals.seconds'))
+        ]);
     }
 }
 
@@ -129,9 +128,7 @@ if (!function_exists('pluralize')) {
 
         if ($n > 4 || $n === 0) {
             return ($prependWithValue ? $value.' ' : '').$word5;
-        }
-
-        if ($n === 1) {
+        } elseif ($n === 1) {
             return ($prependWithValue ? $value.' ' : '').$word1;
         }
 

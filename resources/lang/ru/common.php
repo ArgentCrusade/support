@@ -7,7 +7,6 @@ return [
     'delete' => 'Удалить',
     'submit' => 'Отправить',
     'cancel' => 'Отмена',
-    'ago' => 'назад',
     'no_data' => 'Нет данных',
     'actions' => 'Действия',
     'search' => [

@@ -15,7 +15,8 @@
     "require-dev": {
         "phpunit/phpunit": "^8.3",
         "mockery/mockery": "^1.2",
-        "orchestra/testbench": "^4.0"
+        "orchestra/testbench": "^4.0",
+        "friendsofphp/php-cs-fixer": "^2.16"
     },
     "autoload": {
         "psr-4": {
@@ -37,5 +38,9 @@
                 "ArgentCrusade\\Support\\Providers\\SupportServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "fix": "php-cs-fixer fix"
     }
 }

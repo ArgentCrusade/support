@@ -37,6 +37,7 @@ class HelperFunctionsTest extends TestCase
     /**
      * @param Carbon $date
      * @param string $expected
+     *
      * @dataProvider carbonDiffDataProvider
      */
     public function testCarbonDiffFunction(Carbon $date, string $expected)
@@ -49,6 +50,7 @@ class HelperFunctionsTest extends TestCase
      * @param array  $choices
      * @param string $expected
      * @param bool   $prependWithValue
+     *
      * @dataProvider pluralizeDataProvider
      */
     public function testPluralizeFunction(int $value, array $choices, string $expected, bool $prependWithValue = true)
@@ -56,7 +58,7 @@ class HelperFunctionsTest extends TestCase
         $this->assertSame($expected, pluralize($value, $choices, $prependWithValue));
     }
 
-    public function carbonDiffDataProvider()
+    public static function carbonDiffDataProvider()
     {
         return [
             // Past
@@ -119,7 +121,7 @@ class HelperFunctionsTest extends TestCase
         ];
     }
 
-    public function pluralizeDataProvider()
+    public static function pluralizeDataProvider()
     {
         return [
             [

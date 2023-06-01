@@ -27,7 +27,7 @@ if (!function_exists('carbon_timezone')) {
      *
      * @return \DateTimeInterface|CarbonInterface
      */
-    function carbon_timezone(\DateTimeInterface $date)
+    function carbon_timezone(DateTimeInterface $date)
     {
         if (!app()->bound('user.timezone')) {
             return $date;
@@ -46,7 +46,7 @@ if (!function_exists('carbon_format')) {
      *
      * @return string
      */
-    function carbon_format(\DateTimeInterface $date, string $formatType = 'default')
+    function carbon_format(DateTimeInterface $date, string $formatType = 'default')
     {
         return carbon_timezone($date)->format(
             trans('support::formats.dates.'.$formatType)
@@ -62,7 +62,7 @@ if (!function_exists('carbon_diff')) {
      *
      * @return string
      */
-    function carbon_diff(\DateTimeInterface $date)
+    function carbon_diff(DateTimeInterface $date)
     {
         $now = Carbon::now();
         $diff = carbon_timezone($now)->diff(
@@ -83,7 +83,7 @@ if (!function_exists('carbon_diff')) {
         foreach ($values as $period => $value) {
             if ($value > 0) {
                 return trans($format, [
-                    'value' => pluralize($value, trans('support::formats.date_plurals.'.$period))
+                    'value' => pluralize($value, trans('support::formats.date_plurals.'.$period)),
                 ]);
             }
         }
@@ -95,7 +95,7 @@ if (!function_exists('carbon_diff')) {
         }
 
         return trans($format, [
-            'value' => pluralize($seconds, trans('support::formats.date_plurals.seconds'))
+            'value' => pluralize($seconds, trans('support::formats.date_plurals.seconds')),
         ]);
     }
 }
